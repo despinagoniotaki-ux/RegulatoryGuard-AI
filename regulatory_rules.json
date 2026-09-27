@@ -1,0 +1,50 @@
+{
+    "rules_metadata": {
+        "source_file": "RegulatoryGuardAI_Rules_Example.csv",
+        "total_parameters": 6
+    },
+    "rules": [
+        {
+            "Assay_Parameter": "Body Weight Change",
+            "Unit": "%",
+            "Minor_Variance_Limit_Percent": 5.0,
+            "Major_Variance_Limit_Percent": 10.0,
+            "Action_Required": "Review / Exclude"
+        },
+        {
+            "Assay_Parameter": "Serum Glucose",
+            "Unit": "mg/dL",
+            "Minor_Variance_Limit_Percent": 8.0,
+            "Major_Variance_Limit_Percent": 15.0,
+            "Action_Required": "Review / Exclude"
+        },
+        {
+            "Assay_Parameter": "Heart Rate",
+            "Unit": "bpm",
+            "Minor_Variance_Limit_Percent": 5.0,
+            "Major_Variance_Limit_Percent": 10.0,
+            "Action_Required": "Review / Exclude"
+        },
+        {
+            "Assay_Parameter": "Alanine Aminotransferase (ALT)",
+            "Unit": "U/L",
+            "Minor_Variance_Limit_Percent": 10.0,
+            "Major_Variance_Limit_Percent": 20.0,
+            "Action_Required": "Exclude"
+        },
+        {
+            "Assay_Parameter": "Aspartate Aminotransferase (AST)",
+            "Unit": "U/L",
+            "Minor_Variance_Limit_Percent": 10.0,
+            "Major_Variance_Limit_Percent": 20.0,
+            "Action_Required": "Exclude"
+        },
+        {
+            "Assay_Parameter": "Creatinine",
+            "Unit": "mg/dL",
+            "Minor_Variance_Limit_Percent": 15.0,
+            "Major_Variance_Limit_Percent": 25.0,
+            "Action_Required": "Review"
+        }
+    ]
+}

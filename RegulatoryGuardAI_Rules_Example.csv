@@ -1,0 +1,7 @@
+Assay_Parameter,Unit,Minor_Variance_Limit_Percent,Major_Variance_Limit_Percent,Action_Required
+Body Weight Change,%,5.0,10.0,Review / Exclude
+Serum Glucose,mg/dL,8.0,15.0,Review / Exclude
+Heart Rate,bpm,5.0,10.0,Review / Exclude
+Alanine Aminotransferase (ALT),U/L,10.0,20.0,Exclude
+Aspartate Aminotransferase (AST),U/L,10.0,20.0,Exclude
+Creatinine,mg/dL,15.0,25.0,Review

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RegulatoryGuard AI — UI & Brand Design Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Logo-matched Palette: Deep Navy, Electric Shield Blue, Soft Sky, Slate Greys */
+    --brand-dark: #0A192F;        /* Deep navy text and dark backgrounds */
+    --brand-blue: #0284C7;        /* Vibrant shield blue */
+    --brand-light-blue: #E0F2FE;  /* Soft icy blue tint */
+    
+    --bg-light: #FFFFFF;
+    --bg-surface: #F8FAFC;        /* Clean light grey-white */
+    --bg-card: #FFFFFF;
+    
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --line: #E2E8F0;
+    
+    /* Traffic Light Compliance Tokens */
+    --status-green: #10B981;      /* Approved / Include (<= 5%) */
+    --status-yellow: #F59E0B;     /* Review Required (5% - 10%) */
+    --status-red: #EF4444;        /* Exceeds Limits (> 10%) */
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg-light); color:var(--text-secondary);
+    font-family:"Plus Jakarta Sans","Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.6; font-weight:400;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+  header.top{
+    position:relative; overflow:hidden; color:#fff;
+    background:var(--brand-dark);
+    padding:80px 0 72px;
+  }
+  header.top::after{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 8% 110%, rgba(2,132,199,.4) 0%, rgba(2,132,199,0) 55%),
+      radial-gradient(100% 120% at 95% -10%, rgba(15,23,42,.8) 0%, rgba(15,23,42,0) 60%);
+    pointer-events:none;
+  }
+  header.top .wrap{position:relative;z-index:1}
+  header.top h1{margin:0 0 12px;font-size:clamp(34px,5vw,56px);line-height:1.1;font-weight:700;letter-spacing:-.02em;color:#fff}
+  header.top p{margin:0;max-width:60ch;color:#94A3B8;font-size:18px}
+
+  h2{font-size:clamp(24px,3.2vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.015em;color:var(--text-primary);margin:56px 0 6px}
+  h3{font-size:20px;line-height:1.25;font-weight:600;color:var(--text-primary);margin:28px 0 8px}
+  p{margin:0 0 14px}
+  
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;margin:12px 0 20px;font-size:14px}
+  th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--text-primary);font-weight:600;white-space:nowrap;background:var(--bg-surface)}
+  
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:16px 0 24px}
+  .sw{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg-card)}
+  .sw .chip{height:60px}
+  .sw .meta{padding:10px;font-size:12px;line-height:1.4}
+  .sw .meta b{display:block;color:var(--text-primary);font-size:13px}
+  .sw .meta span{color:var(--text-secondary);font-family:Consolas,Menlo,monospace}
+
+  .demo{border:1px solid var(--line);border-radius:14px;padding:26px;background:var(--bg-surface);margin:16px 0}
+  
+  /* Traffic Light Badges */
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  .badge.green{background:rgba(16,185,129,.1);color:#047857;border:1px solid rgba(16,185,129,.3)}
+  .badge.yellow{background:rgba(245,158,11,.1);color:#B45309;border:1px solid rgba(245,158,11,.3)}
+  .badge.red{background:rgba(239,68,68,.1);color:#B91C1C;border:1px solid rgba(239,68,68,.3)}
+  
+  .dot{width:10px;height:10px;border-radius:50%}
+  .green-dot{background:var(--status-green)}
+  .yellow-dot{background:var(--status-yellow)}
+  .red-dot{background:var(--status-red)}
+
+  .btn{display:inline-block;border:2px solid var(--brand-blue);background:var(--brand-blue);color:#fff;
+    border-radius:8px;padding:10px 22px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer}
+  .btn.secondary{background:transparent;color:var(--brand-blue)}
+
+  footer{border-top:1px solid var(--line);margin-top:72px;padding:24px 0 56px;color:var(--text-secondary);font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1>RegulatoryGuard AI Design System</h1>
+    <p>Enterprise blue, grey, and white visual guidelines inspired by the official shield brand identity, featuring traffic light compliance indicators.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <h2>1. Brand Color Tokens (Blue, Grey, White)</h2>
+  <p>Clean, high-contrast corporate tones reflecting precision, data security, and regulatory transparency.</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#0A192F"></div><div class="meta"><b>Deep Navy</b><span>#0A192F</span> Headers &amp; brand base</div></div>
+    <div class="sw"><div class="chip" style="background:#0284C7"></div><div class="meta"><b>Shield Blue</b><span>#0284C7</span> Primary buttons &amp; accent</div></div>
+    <div class="sw"><div class="chip" style="background:#E0F2FE"></div><div class="meta"><b>Ice Blue Tint</b><span>#E0F2FE</span> Highlight cards</div></div>
+    <div class="sw"><div class="chip" style="background:#F8FAFC;border-bottom:1px solid #E2E8F0"></div><div class="meta"><b>Surface Grey</b><span>#F8FAFC</span> Background fills</div></div>
+    <div class="sw"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #E2E8F0"></div><div class="meta"><b>Pure White</b><span>#FFFFFF</span> Container background</div></div>
+  </div>
+
+  <h2>2. Traffic Light Status Indicators</h2>
+  <p>Intuitive visual markers used across tables and summary matrices to flag preclinical dosing variances instantly.</p>
+  
+  <div class="demo">
+    <h3>Compliance Matrix Badge States</h3>
+    <div style="display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;">
+      <span class="badge green"><span class="dot green-dot"></span> APPROVED (INCLUDE &le; 5%)</span>
+      <span class="badge yellow"><span class="dot yellow-dot"></span> REVIEW (5% - 10%)</span>
+      <span class="badge red"><span class="dot red-dot"></span> EXCEEDS LIMIT (&gt; 10%)</span>
+    </div>
+  </div>
+
+  <h2>3. Dashboard UI Components</h2>
+  <p>Standardized interactive elements for your Streamlit application layout.</p>
+  <div class="demo">
+    <h3>Action Toolbar</h3>
+    <div style="margin-top:12px; display:flex; gap:12px; align-items:center;">
+      <a class="btn" href="#run">Run Compliance Check</a>
+      <a class="btn secondary" href="#export">Export eCTD Package</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">RegulatoryGuard AI — Designed for IBM Bob 2.0 Hackathon. Palette aligned with official vector branding[cite: 3].</div>
+</footer>
+
+</body>
+</html>

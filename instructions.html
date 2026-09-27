@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RegulatoryGuard AI — User Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-dark:       #0A192F;
+    --brand-blue:       #0284C7;
+    --brand-light-blue: #E0F2FE;
+    --bg-surface:       #F8FAFC;
+    --bg-card:          #FFFFFF;
+    --text-primary:     #0F172A;
+    --text-secondary:   #475569;
+    --line:             #E2E8F0;
+    --status-green:     #10B981;
+    --status-yellow:    #F59E0B;
+    --status-red:       #EF4444;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #F1F5F9;
+    color: var(--text-secondary);
+    font-family: 'Plus Jakarta Sans', 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ─── Header ─────────────────────────────────────────── */
+  header {
+    background: var(--brand-dark);
+    padding: 56px 0 52px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 90% at 8% 110%, rgba(2,132,199,.35) 0%, rgba(2,132,199,0) 55%),
+      radial-gradient(80% 100% at 95% -5%, rgba(15,23,42,.7) 0%, rgba(15,23,42,0) 60%);
+    pointer-events: none;
+  }
+  header .wrap { position: relative; z-index: 1; }
+  header .badge-tag {
+    display: inline-block;
+    background: rgba(2,132,199,.2);
+    color: #7DD3FC;
+    border: 1px solid rgba(2,132,199,.35);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  header h1 {
+    margin: 0 0 10px;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.025em;
+    line-height: 1.1;
+  }
+  header p {
+    margin: 0;
+    color: #94A3B8;
+    font-size: 16px;
+    max-width: 56ch;
+  }
+
+  /* ─── Layout ─────────────────────────────────────────── */
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 32px; padding: 40px 0 60px; align-items: start; }
+
+  /* ─── TOC sidebar ─────────────────────────────────────── */
+  .toc {
+    position: sticky;
+    top: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .toc-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--text-secondary);
+    margin: 0 0 12px;
+  }
+  .toc ol {
+    margin: 0; padding: 0 0 0 18px;
+    font-size: 13px;
+    line-height: 2;
+    color: var(--brand-blue);
+  }
+  .toc ol li a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .15s;
+  }
+  .toc ol li a:hover { color: var(--brand-blue); }
+
+  /* ─── Main content ────────────────────────────────────── */
+  .content { min-width: 0; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 48px 0 10px;
+    letter-spacing: -.02em;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--line);
+  }
+  h2:first-child { margin-top: 0; }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 24px 0 6px;
+  }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 5px; }
+
+  /* ─── Code blocks ─────────────────────────────────────── */
+  code {
+    font-family: 'Menlo', 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    background: rgba(15,23,42,.07);
+    color: #0F172A;
+    padding: 2px 6px;
+    border-radius: 5px;
+  }
+  pre {
+    background: var(--brand-dark);
+    color: #E2E8F0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 10px 0 18px;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  /* ─── Info / tip / warning panels ───────────────────────*/
+  .panel {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    border-left: 4px solid;
+  }
+  .panel.info    { background: var(--brand-light-blue); border-color: var(--brand-blue); color: #0C4A6E; }
+  .panel.tip     { background: rgba(16,185,129,.08);    border-color: var(--status-green); color: #064E3B; }
+  .panel.warning { background: rgba(245,158,11,.09);    border-color: var(--status-yellow); color: #78350F; }
+  .panel.danger  { background: rgba(239,68,68,.08);     border-color: var(--status-red); color: #7F1D1D; }
+
+  /* ─── Step list ───────────────────────────────────────── */
+  .step-list { list-style: none; padding: 0; margin: 0 0 18px; }
+  .step-list li {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    min-width: 28px; height: 28px;
+    background: var(--brand-blue); color: #fff;
+    border-radius: 50%;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ─── Traffic-light badges ────────────────────────────── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+  }
+  .badge.green  { background: rgba(16,185,129,.1); color: #047857; border: 1px solid rgba(16,185,129,.3); }
+  .badge.yellow { background: rgba(245,158,11,.1);  color: #B45309; border: 1px solid rgba(245,158,11,.3); }
+  .badge.red    { background: rgba(239,68,68,.1);   color: #B91C1C; border: 1px solid rgba(239,68,68,.3); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .green-dot  { background: var(--status-green); }
+  .yellow-dot { background: var(--status-yellow); }
+  .red-dot    { background: var(--status-red); }
+
+  /* ─── Table ───────────────────────────────────────────── */
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0 20px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--bg-surface); color: var(--text-primary); font-weight: 700; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+
+  /* ─── Card ────────────────────────────────────────────── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin: 12px 0;
+  }
+
+  /* ─── Footer ──────────────────────────────────────────── */
+  footer {
+    text-align: center;
+    border-top: 1px solid var(--line);
+    padding: 24px 0 48px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+  }
+
+  /* ─── Responsive ──────────────────────────────────────── */
+  @media (max-width: 700px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Header ─────────────────────────────────────────────────────────── -->
+<header>
+  <div class="wrap">
+    <div class="badge-tag">User Guide</div>
+    <h1>RegulatoryGuard AI</h1>
+    <p>Setup, launch, and walkthrough guide for the IBM Bob 2.0 Hackathon MVP — pre-clinical compliance engine.</p>
+  </div>
+</header>
+
+<!-- ─── Body ───────────────────────────────────────────────────────────── -->
+<div class="wrap">
+<div class="layout">
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#setup">Installation &amp; Setup</a></li>
+      <li><a href="#launch">Launching the Dashboard</a></li>
+      <li><a href="#walkthrough">Dashboard Walkthrough</a></li>
+      <li><a href="#custom-rules">Using Custom Rules</a></li>
+      <li><a href="#bob">Bob 2.0 Narrative Generation</a></li>
+      <li><a href="#export">Exporting Results</a></li>
+      <li><a href="#pipeline">Running the Pipeline Standalone</a></li>
+      <li><a href="#faq">FAQ &amp; Troubleshooting</a></li>
+    </ol>
+  </nav>
+
+  <!-- Main content -->
+  <main class="content">
+
+    <!-- 1. Overview -->
+    <section id="overview">
+      <h2>1&nbsp; Overview</h2>
+      <p>
+        <strong>RegulatoryGuard AI</strong> is a three-tier, flat-file pre-clinical data compliance engine
+        built for the IBM Bob 2.0 Hackathon. It automates the detection of dosing variance deviations across
+        animal cohorts, surfaces compliance verdicts in a modern Streamlit dashboard, and generates
+        eCTD-ready narratives via the IBM Bob 2.0 large language model API.
+      </p>
+
+      <h3>Architecture at a glance</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Tier</th><th>Component</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1 — Rules</strong></td><td><code>RegulatoryGuardAI_Rules_Example.csv</code> → <code>regulatory_rules.json</code></td><td>Science-team-authored variance thresholds per assay parameter</td></tr>
+            <tr><td><strong>2 — Engine</strong></td><td><code>process_data.py</code></td><td>Pandas engine: computes deviation %, assigns traffic-light status, maps cohort → rule</td></tr>
+            <tr><td><strong>3 — UI &amp; AI</strong></td><td><code>app.py</code> + Bob 2.0 API</td><td>Streamlit dashboard + AI narrative generation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Traffic-light compliance verdicts</h3>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin: 10px 0 16px;">
+        <span class="badge green"><span class="dot green-dot"></span>INCLUDE — deviation ≤ minor limit</span>
+        <span class="badge yellow"><span class="dot yellow-dot"></span>REVIEW — between minor &amp; major limit</span>
+        <span class="badge red"><span class="dot red-dot"></span>EXCLUDE — exceeds major limit</span>
+      </div>
+
+      <h3>Key capabilities</h3>
+      <ul>
+        <li>Multi-project workspace with unique 15-digit project IDs</li>
+        <li>Per-record 15-digit IDs (first 6 digits derived from the project ID)</li>
+        <li>Import delta detection — new records vs. previously seen records highlighted</li>
+        <li>Custom rules upload (CSV or JSON) overriding the default rulebook</li>
+        <li>Bob 2.0 AI narrative generation with graceful placeholder fallback</li>
+        <li>One-click eCTD-ready CSV export</li>
+      </ul>
+    </section>
+
+    <!-- 2. Installation -->
+    <section id="setup">
+      <h2>2&nbsp; Installation &amp; Setup</h2>
+
+      <h3>Prerequisites</h3>
+      <ul>
+        <li>Python <strong>3.10 or later</strong></li>
+        <li><code>pip</code> (comes with Python) or <code>conda</code></li>
+        <li>Git (optional — you can also download the ZIP)</li>
+        <li>~200 MB free disk space</li>
+      </ul>
+
+      <div class="panel info">
+        <strong>Tip:</strong> Using a virtual environment is strongly recommended to avoid
+        dependency conflicts with other projects.
+      </div>
+
+      <h3>Step-by-step</h3>
+      <ul class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div>
+            <strong>Clone or download the project</strong>
+            <pre><code>git clone https://github.com/your-org/RegulatoryGuardAI.git
+cd RegulatoryGuardAI</code></pre>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div>
+            <strong>Create and activate a virtual environment</strong>
+            <pre><code># macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Windows
+python -m venv .venv
+.venv\Scripts\activate</code></pre>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div>
+            <strong>Install dependencies</strong>
+            <pre><code>pip install -r requirements.txt</code></pre>
+            The following packages will be installed:
+            <ul style="margin-top:8px;">
+              <li><code>streamlit &gt;= 1.35</code></li>
+              <li><code>pandas &gt;= 2.0</code></li>
+              <li><code>numpy &gt;= 1.26</code></li>
+              <li><code>requests &gt;= 2.31</code></li>
+              <li><code>python-dotenv &gt;= 1.0</code></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div>
+            <strong>Configure watsonx.ai credentials</strong>
+            <p style="margin:6px 0 4px;">Copy the example file and fill in your own values:</p>
+            <pre><code>cp .env.example .env</code></pre>
+            Then open <code>.env</code> in any text editor and set:
+            <pre><code>WATSONX_PROJECT_ID=your-watsonx-project-id-here
+WATSONX_API_KEY=your-ibm-cloud-api-key-here</code></pre>
+            <ul style="margin-top:8px;">
+              <li><strong>Project ID</strong> — found in your <a href="https://dataplatform.cloud.ibm.com/" target="_blank">watsonx.ai</a> project settings under <em>Manage → General</em>.</li>
+              <li><strong>API Key</strong> — create one at <a href="https://cloud.ibm.com/iam/apikeys" target="_blank">cloud.ibm.com/iam/apikeys</a>.</li>
+            </ul>
+            <p style="margin:8px 0 0;">
+              The app reads these values at startup and pre-fills the sidebar fields automatically.
+              You can always override them in the sidebar without editing <code>.env</code>.
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div>
+            <strong>Compile the default rulebook</strong> (only needed once, or after editing the CSV)
+            <pre><code>python convert_rules_dynamic.py RegulatoryGuardAI_Rules_Example.csv</code></pre>
+            This produces <code>regulatory_rules.json</code> at the project root.
+          </div>
+        </li>
+      </ul>
+
+      <div class="panel tip">
+        <strong>Already done?</strong> A pre-compiled <code>regulatory_rules.json</code> is included in the repo —
+        you can skip step 5 unless you modify the rules CSV.
+      </div>
+
+      <div class="panel info">
+        <strong>Demo mode:</strong> The shared demo build ships with credentials pre-loaded in <code>.env</code> —
+        no extra configuration is needed to try AI narrative generation.
+        For your own deployment, replace the values in <code>.env</code> with your credentials.
+      </div>
+    </section>
+
+    <!-- 3. Launch -->
+    <section id="launch">
+      <h2>3&nbsp; Launching the Dashboard</h2>
+
+      <p>From the project root (with the virtual environment active):</p>
+      <pre><code>streamlit run app.py</code></pre>
+
+      <p>Streamlit will print something like:</p>
+      <pre><code>  You can now view your Streamlit app in your browser.
+  Local URL:  http://localhost:8501
+  Network URL: http://192.168.x.x:8501</code></pre>
+
+      <p>Open <a href="http://localhost:8501" target="_blank"><code>http://localhost:8501</code></a> in your browser.</p>
+
+      <div class="panel info">
+        <strong>Port conflict?</strong> Use <code>streamlit run app.py --server.port 8080</code>
+        to run on a different port.
+      </div>
+    </section>
+
+    <!-- 4. Walkthrough -->
+    <section id="walkthrough">
+      <h2>4&nbsp; Dashboard Walkthrough</h2>
+
+      <h3>4.1 — Sidebar</h3>
+      <p>The left sidebar is divided into four sections:</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Section</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><strong>🗂 Project</strong></td><td>Create a new project (name + description → unique 15-digit ID assigned automatically) or switch to an existing one.</td></tr>
+            <tr><td><strong>📋 Compliance Rules</strong></td><td>Download the template rules CSV; upload a custom rules file (CSV or JSON).</td></tr>
+            <tr><td><strong>📂 Dataset</strong></td><td>Load the built-in mock dataset or upload your own pre-clinical CSV.</td></tr>
+            <tr><td><strong>🤖 Bob 2.0 Narrative</strong></td><td>watsonx.ai Project ID and IBM Cloud API Key for AI narrative generation (pre-filled from <code>.env</code>).</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.2 — Executive Summary</h3>
+      <p>After running the compliance check, four KPI cards appear at the top of the main panel:</p>
+      <ul>
+        <li><strong>Total Records</strong> — number of rows analysed in this import, with new-record delta</li>
+        <li><strong>✓ Include</strong> — records within all acceptance limits (green)</li>
+        <li><strong>⚠ Review</strong> — records between minor and major variance limits (yellow)</li>
+        <li><strong>✕ Exclude</strong> — records exceeding the major variance limit (red)</li>
+      </ul>
+
+      <h3>4.3 — Distribution Charts</h3>
+      <ul>
+        <li><strong>Status Distribution</strong> — bar chart of INCLUDE / REVIEW / EXCLUDE counts</li>
+        <li><strong>Deviation % by Cohort</strong> — mean deviation per cohort group</li>
+        <li><strong>Deviation % Histogram</strong> — frequency distribution across deviation buckets</li>
+      </ul>
+
+      <h3>4.4 — Interactive Data Viewer</h3>
+      <p>Filter the results table by:</p>
+      <ul>
+        <li><strong>Status</strong> multi-select (INCLUDE / REVIEW / EXCLUDE)</li>
+        <li><strong>Cohort</strong> multi-select</li>
+        <li><strong>Free-text search</strong> across Animal ID and Notes fields</li>
+      </ul>
+      <p>
+        Each row includes: <code>Record_ID</code>, <code>Animal_ID</code>, <code>Cohort</code>,
+        <code>Target_Dose_mg_kg</code>, <code>Actual_Dose_mg_kg</code>, <code>Deviation_Pct</code>,
+        <code>Status</code> (badge), <code>System_Action</code>, <code>Applied_Rule</code>, and
+        <code>Delta</code> (NEW / EXISTING).
+      </p>
+
+      <h3>4.5 — Import History</h3>
+      <p>
+        Expand the <em>Import History</em> panel at the bottom to see a timestamped log of all
+        compliance runs within the current session, including import IDs and new-record counts.
+      </p>
+
+      <div class="panel info">
+        <strong>Project IDs and Record IDs:</strong> Every project is assigned a random 15-digit numeric ID.
+        Each imported record receives its own 15-digit ID where the first 6 digits match the last 6 digits
+        of the project ID, enabling traceability across exports.
+      </div>
+    </section>
+
+    <!-- 5. Custom rules -->
+    <section id="custom-rules">
+      <h2>5&nbsp; Using Custom Rules</h2>
+
+      <h3>Download the template</h3>
+      <p>
+        Click <strong>"⬇ Download Rules Template"</strong> in the sidebar to get
+        <code>RegulatoryGuardAI_Rules_Example.csv</code>. Open it in any spreadsheet editor.
+      </p>
+
+      <h3>CSV column reference</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>Assay_Parameter</code></td><td>text</td><td>Name of the assay (must match cohort mapping)</td></tr>
+            <tr><td><code>Unit</code></td><td>text</td><td>Unit of measurement (for display only)</td></tr>
+            <tr><td><code>Minor_Variance_Limit_Percent</code></td><td>number</td><td>Upper boundary of the INCLUDE zone (%)</td></tr>
+            <tr><td><code>Major_Variance_Limit_Percent</code></td><td>number</td><td>Upper boundary of the REVIEW zone; beyond this = EXCLUDE (%)</td></tr>
+            <tr><td><code>Action_Required</code></td><td>text</td><td>Action text shown in the REVIEW row (e.g. <em>Review / Exclude</em>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Upload your rules</h3>
+      <ul class="step-list">
+        <li><div class="step-num">1</div><div>Edit the CSV template with your thresholds and save it.</div></li>
+        <li><div class="step-num">2</div><div>In the sidebar under <strong>📋 Compliance Rules</strong>, use the <em>Upload custom rules</em> file picker.</div></li>
+        <li><div class="step-num">3</div><div>A success message confirms how many rules were loaded.</div></li>
+        <li><div class="step-num">4</div><div>Click <strong>"▶ Run Compliance Check"</strong> — the engine will now use your rules.</div></li>
+      </ul>
+
+      <div class="panel tip">
+        You can also upload a JSON file (<code>.json</code>) that already follows the
+        <code>regulatory_rules.json</code> schema — the app accepts both formats.
+      </div>
+
+      <h3>Cohort-to-rule mapping (default)</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Cohort</th><th>Assay Parameter Applied</th></tr></thead>
+          <tbody>
+            <tr><td><code>Group_1_Low</code></td><td>Body Weight Change</td></tr>
+            <tr><td><code>Group_2_Mid</code></td><td>Serum Glucose</td></tr>
+            <tr><td><code>Group_3_High</code></td><td>Heart Rate</td></tr>
+            <tr><td><code>Group_4_Control</code></td><td>Alanine Aminotransferase (ALT)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Cohorts not in this mapping fall back to the rule with the most conservative
+        (lowest) minor variance limit.
+      </p>
+    </section>
+
+    <!-- 6. Bob 2.0 -->
+    <section id="bob">
+      <h2>6&nbsp; Bob 2.0 Narrative Generation</h2>
+
+      <p>
+        RegulatoryGuard AI integrates the <strong>IBM Bob 2.0</strong> large language model to
+        automatically produce an eCTD Section 2.6-style compliance narrative from the processed
+        compliance summary.
+      </p>
+
+      <h3>Configuration</h3>
+      <p>
+        Credentials are loaded automatically from <code>.env</code> at startup (see
+        <a href="#setup">Installation &amp; Setup — Step 4</a>).
+        The sidebar fields are pre-filled; you can edit them inline at any time without touching <code>.env</code>.
+      </p>
+      <ul class="step-list">
+        <li>
+          <div class="step-num">1</div>
+          <div>
+            Ensure <code>.env</code> contains your <code>WATSONX_PROJECT_ID</code> and
+            <code>WATSONX_API_KEY</code> (or enter them directly in the sidebar under
+            <strong>🤖 Bob 2.0 Narrative</strong>).
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div>Run a compliance check (<strong>"▶ Run Compliance Check"</strong>) to produce a summary.</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div>Click <strong>"🤖 Generate Narrative"</strong> — the app will call watsonx.ai and display the result.</div>
+        </li>
+      </ul>
+
+      <div class="panel warning">
+        <strong>No credentials?</strong> If either sidebar field is left blank, the app will display a clearly
+        labelled placeholder narrative — the rest of the dashboard remains fully functional.
+      </div>
+
+      <h3>What the narrative includes</h3>
+      <ul>
+        <li>Total number of records analysed</li>
+        <li>Per-status counts and percentages</li>
+        <li>Maximum deviation observed and which cohort it occurred in</li>
+        <li>Which assay rules were applied</li>
+        <li>A professional summary sentence suitable for eCTD submission</li>
+      </ul>
+
+      <h3>How it works</h3>
+      <div class="card">
+        <p style="margin:0;"><strong>Step 1 — IAM token exchange:</strong> The app POSTs your API key to
+          <code>https://iam.cloud.ibm.com/identity/token</code> to obtain a short-lived bearer token.</p>
+        <p style="margin:8px 0 0;"><strong>Step 2 — Inference call:</strong></p>
+        <p style="margin:4px 0;"><code>POST https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29</code></p>
+        <p style="margin:4px 0;"><strong>Headers:</strong> <code>Authorization: Bearer &lt;iam_token&gt;</code>, <code>Content-Type: application/json</code></p>
+        <p style="margin:4px 0;"><strong>Model:</strong> <code>ibm/granite-13b-instruct-v2</code></p>
+        <p style="margin:4px 0;"><strong>Payload includes:</strong> <code>project_id</code>, <code>model_id</code>, <code>input</code> (prompt), <code>parameters</code></p>
+        <p style="margin:4px 0 0;"><strong>No extra SDK</strong> — called via standard <code>requests</code> library.</p>
+      </div>
+    </section>
+
+    <!-- 7. Export -->
+    <section id="export">
+      <h2>7&nbsp; Exporting Results</h2>
+
+      <p>
+        Click <strong>"⬇ Export eCTD Package (CSV)"</strong> (below the data table) to download
+        the full processed dataset as a CSV file named
+        <code>audit_ready_report_&lt;project_id&gt;.csv</code>.
+      </p>
+
+      <h3>Exported columns</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Column</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>Record_ID</code></td><td>15-digit unique record identifier (first 6 = last 6 of project ID)</td></tr>
+            <tr><td><code>Import_TS</code></td><td>UTC timestamp of the import run</td></tr>
+            <tr><td><code>Animal_ID</code></td><td>Original animal identifier from the source data</td></tr>
+            <tr><td><code>Cohort</code></td><td>Dose group assignment</td></tr>
+            <tr><td><code>Target_Dose_mg_kg</code></td><td>Intended dose (mg/kg)</td></tr>
+            <tr><td><code>Actual_Dose_mg_kg</code></td><td>Administered dose (mg/kg)</td></tr>
+            <tr><td><code>Deviation_Pct</code></td><td>Absolute deviation % from target</td></tr>
+            <tr><td><code>Status</code></td><td>INCLUDE / REVIEW / EXCLUDE</td></tr>
+            <tr><td><code>System_Action</code></td><td>Recommended action text</td></tr>
+            <tr><td><code>Applied_Rule</code></td><td>Name of the assay rule applied to this record</td></tr>
+            <tr><td><code>Delta</code></td><td>NEW (first import) or EXISTING (seen in a prior import)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel tip">
+        The CSV is ready for direct attachment to an eCTD submission package or import into
+        a LIMS / EDC system.
+      </div>
+    </section>
+
+    <!-- 8. Standalone pipeline -->
+    <section id="pipeline">
+      <h2>8&nbsp; Running the Pipeline Standalone</h2>
+
+      <p>
+        Each tier can be run independently from the command line — useful for batch processing,
+        CI pipelines, or quick testing without opening the dashboard.
+      </p>
+
+      <h3>Tier 1 — Compile rules</h3>
+      <pre><code>python convert_rules_dynamic.py RegulatoryGuardAI_Rules_Example.csv
+# Output: regulatory_rules.json
+
+# Custom output path:
+python convert_rules_dynamic.py my_rules.csv my_output.json</code></pre>
+
+      <h3>Tier 2 — Run compliance engine</h3>
+      <pre><code>python process_data.py
+# Reads:  RegulatoryGuardAI_Test_Records/RegulatoryGuardAI_mock_preclinical_data.csv
+#         regulatory_rules.json
+# Output: audit_ready_report.csv</code></pre>
+
+      <div class="panel info">
+        <strong>Expected distribution</strong> for the mock dataset: ~90% INCLUDE,
+        ~7% REVIEW, ~3% EXCLUDE across 3,200 records.
+      </div>
+
+      <h3>Full pipeline (one-liner)</h3>
+      <pre><code>python convert_rules_dynamic.py RegulatoryGuardAI_Rules_Example.csv &amp;&amp; python process_data.py</code></pre>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section id="faq">
+      <h2>9&nbsp; FAQ &amp; Troubleshooting</h2>
+
+      <h3>The dashboard shows "No active project" after I create one</h3>
+      <p>
+        The project is stored in the Streamlit session state. If the page fully reloads
+        (e.g. after a code change while the dev server is running), session state is cleared.
+        Simply re-create the project in the sidebar — this is expected behaviour for the MVP's
+        in-memory persistence.
+      </p>
+
+      <h3>Clicking "Load Mock Dataset" does nothing</h3>
+      <p>
+        Ensure the file
+        <code>RegulatoryGuardAI_Test_Records/RegulatoryGuardAI_mock_preclinical_data.csv</code>
+        exists relative to the directory you launched Streamlit from. Always run
+        <code>streamlit run app.py</code> from the project root.
+      </p>
+
+      <h3><code>ModuleNotFoundError: No module named 'streamlit'</code></h3>
+      <p>
+        Your virtual environment is not active, or you forgot to run
+        <code>pip install -r requirements.txt</code>.
+        Re-activate the environment (<code>source .venv/bin/activate</code>) and reinstall.
+      </p>
+
+      <h3>Rules uploaded but compliance check still uses old thresholds</h3>
+      <p>
+        After uploading new rules, click <strong>"▶ Run Compliance Check"</strong> again.
+        Uploading the file updates the rules in session state; the engine only uses them
+        on the next run.
+      </p>
+
+      <h3>watsonx.ai narrative returns an error or empty text</h3>
+      <ul>
+        <li>Check that <code>WATSONX_PROJECT_ID</code> and <code>WATSONX_API_KEY</code> in <code>.env</code> are correct (no extra spaces or quotes).</li>
+        <li>Confirm the API key is valid and has not been deleted — regenerate it at <a href="https://cloud.ibm.com/iam/apikeys" target="_blank">cloud.ibm.com/iam/apikeys</a> if needed.</li>
+        <li>Verify the project ID matches the one shown in your watsonx.ai project under <em>Manage → General</em>.</li>
+        <li>Check that your network allows outbound HTTPS to <code>iam.cloud.ibm.com</code> and <code>us-south.ml.cloud.ibm.com</code>.</li>
+        <li>If the issue persists, the placeholder narrative is used automatically — the app remains fully functional.</li>
+      </ul>
+
+      <h3>How do I add my own cohort-to-rule mappings?</h3>
+      <p>
+        Open <code>app.py</code> and find the <code>COHORT_RULE_MAP</code> dictionary near the top.
+        Add entries in the format <code>"Your_Cohort_Name": "Assay_Parameter_Name"</code>.
+        The assay parameter name must exactly match the <code>Assay_Parameter</code> column value
+        in your rules CSV.
+      </p>
+
+      <h3>I want to persist projects across sessions</h3>
+      <p>
+        The MVP uses Streamlit session state (in-memory). For persistence, export the results CSV
+        after each session. A database backend is out of scope for this hackathon release.
+      </p>
+
+      <h3>Port 8501 is already in use</h3>
+      <pre><code>streamlit run app.py --server.port 8080</code></pre>
+
+      <h3>Python version compatibility</h3>
+      <p>
+        RegulatoryGuard AI requires Python 3.10 or later. Run <code>python --version</code>
+        to verify. On macOS / Linux you may need to use <code>python3</code> instead of <code>python</code>.
+      </p>
+    </section>
+
+  </main>
+</div><!-- .layout -->
+</div><!-- .wrap -->
+
+<footer>
+  <p style="margin:0;">RegulatoryGuard AI &nbsp;·&nbsp; IBM Bob 2.0 Hackathon MVP &nbsp;·&nbsp; Made with IBM Bob</p>
+</footer>
+
+</body>
+</html>
